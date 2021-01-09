@@ -1,0 +1,17 @@
+{
+    "semi": false,
+    "overrides": [
+      {
+        "files": "*.test.tsx",
+        "options": {
+          "semi": true
+        }
+      },
+      {
+        "files": ["*.html", "legacy/**/*.tsx"],
+        "options": {
+          "tabWidth": 4
+        }
+      }
+    ]
+  }
