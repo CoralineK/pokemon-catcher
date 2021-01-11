@@ -11,7 +11,7 @@ const TextBox = styled.div`
   height: calc(${FONT_SIZE} * 1.4);
   width: calc(${FONT_SIZE} * 8.83);
   padding-bottom: 150px;
-  margin-top: 35vh;
+  margin-top: 25vh;
 `
 const TextBlue = styled.div`
   ${text}

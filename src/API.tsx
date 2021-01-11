@@ -1,13 +1,17 @@
 export const getPokemonsName = async (offset: number) => {
-  const TO_URL = `https://pokeapi.co/api/v2/pokemon?limit=5&offset=[${offset}]`
+  const TO_URL = `https://pokeapi.co/api/v2/pokemon?limit=5&offset=${offset}`
   const response = await fetch(TO_URL)
   const data = await response.json()
   return data.results
 }
 
-export const getPokemonsInfo = async (link: any) => {
-  const TO_URL = `${link}`
+export const getPokemonsInfo = async (pokemon: any) => {
+  const TO_URL = `${pokemon.url}`
   const response = await fetch(TO_URL)
   const data = await response.json()
-  return data
+  return {
+    name: pokemon.name,
+    artwork: data.sprites.other["official-artwork"].front_default,
+    stats: data.stats.map((stat:any) => ({name: stat.stat.name, value: stat.base_stat})),
+  }
 }
