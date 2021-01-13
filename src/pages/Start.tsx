@@ -1,7 +1,16 @@
-import React from "react"
-import Logo from "../components/Logo"
-import Nickname from "../components/Nickname"
-import { Body } from "../styles/styled-components"
+import React from 'react';
+import styled from 'styled-components';
+import Logo from '../components/Logo';
+import Nickname from '../components/Nickname';
+
+const Body = styled.div`
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
 
 function Start() {
   return (
@@ -9,7 +18,7 @@ function Start() {
       <Logo />
       <Nickname />
     </Body>
-  )
+  );
 }
 
-export default Start
+export default Start;
