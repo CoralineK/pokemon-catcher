@@ -1,10 +1,11 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Context from '../Context';
 import { Button } from '../styles/styled-components';
 import Logo from '../components/Logo';
 import Pokemons from '../components/Pokemons';
-import { cachedDataVersionTag } from 'v8';
+import * as API from '../API';
+import { PokemonType } from '../types';
 
 const Body = styled.div`
   width: 100%;
@@ -37,19 +38,26 @@ const Welcome = styled.p`
 `;
 
 function Catching() {
-  const [catched, setCatched] = useState<string[]>([]);
-  const { state } = useContext(Context);
+  const [catched, setCatched] = useState<string[] | undefined>();
+  const { state, action } = useContext(Context);
 
-  function handleMouseDown() {
-    setCatched([]);
-  }
+  const pokemons = (offset: number) => {
+    API.getPokemonsName(offset).then((result) => {
+      action.setPokemons(result);
+    });
+  };
+
+  useEffect(() => {
+    pokemons(state.nickname.length * 10);
+  }, []);
 
   function handleOnClick() {
+    setCatched([]);
     const pokemons = state.pokemonsInfo.filter(
       () => Math.round(Math.random()) === 1,
     );
 
-    setCatched(pokemons.map((e: any) => e.name));
+    setCatched(pokemons.map((pokemon: PokemonType) => pokemon.name));
 
     console.log({
       nickanme: state.nickname,
@@ -63,7 +71,6 @@ function Catching() {
       <Welcome>Welcome, {state.nickname}!</Welcome>
       <Pokemons catched={catched} />
       <Button
-        onMouseDown={handleMouseDown}
         onClick={handleOnClick}
         style={{ backgroundColor: '#3d7dca', color: 'white' }}
       >

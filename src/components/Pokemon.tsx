@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import * as API from '../API';
+import { PokemonType, PokemonProps, PokemonInfo } from '../types';
 import Context from '../Context';
+import Info from './Info';
 
 const font = () => 'font-family: "Ubuntu", sans-serif; color: #2e2e2e;';
 
@@ -33,48 +35,14 @@ const Artwork = styled.div`
     height: 18vh;
   }
 `;
-const Info = styled.div`
-  position: absolute;
-  z-index: 3;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.7);
-  border-radius: 8px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-`;
-const Stat = styled.div`
-  ${font}
-`;
 
-type pokemonType = {
-  name: string;
-  url: string;
-};
-type Props = {
-  pokemonAPI: pokemonType;
-  catched: string[];
-};
-type StatsType = {
-  name: string;
-  value: number;
-};
-type PokemonInfoType = {
-  name: string;
-  artwork: string;
-  stats: StatsType[];
-};
-
-function Pokemon({ pokemonAPI, catched }: Props) {
+function Pokemon({ pokemonAPI, catched }: PokemonProps) {
   const { state, action } = useContext(Context);
-  const [pokemonInfo, setPokemonInfo] = useState<PokemonInfoType>();
-  const [border, setBorder] = useState<string>('#003a70');
+  const [pokemonInfo, setPokemonInfo] = useState<PokemonInfo>();
+  const [border, setBorder] = useState<string>('inset 0 0 0 1px #003a70');
   const [tooltip, setTooltip] = useState<string>('none');
 
-  const pokemon = (pokemon: pokemonType) => {
+  const pokemon = (pokemon: PokemonType) => {
     API.getPokemonsInfo(pokemon).then((result) => {
       setPokemonInfo(result);
     });
@@ -92,12 +60,12 @@ function Pokemon({ pokemonAPI, catched }: Props) {
   }, [pokemonInfo]);
 
   useEffect(() => {
-    if (pokemonInfo && catched.includes(pokemonInfo.name)) {
-      setBorder('inset 0 0 0 2px #4ede31');
-    } else {
-      setBorder('inset 0 0 0 1px #003a70');
+    if (pokemonInfo && catched) {
+      catched.includes(pokemonInfo.name)
+        ? setBorder('inset 0 0 0 2px #4ede31')
+        : setBorder('inset 0 0 0 2px #eb4034');
     }
-  }, [catched]);
+  }, [catched, pokemonInfo]);
 
   function handleOnMouseEnter() {
     setTooltip('flex');
@@ -113,13 +81,7 @@ function Pokemon({ pokemonAPI, catched }: Props) {
       onMouseLeave={handleOnMouseLeave}
       style={{ boxShadow: border }}
     >
-      <Info style={{ display: tooltip }}>
-        {pokemonInfo.stats.map((e: StatsType) => (
-          <Stat style={{ color: 'white' }}>
-            {e.name.toUpperCase()} {e.value}
-          </Stat>
-        ))}
-      </Info>
+      <Info display={tooltip} pokemonInfo={pokemonInfo} />
       <Artwork>
         <img src={pokemonInfo.artwork} alt={pokemon.name} />
       </Artwork>

@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import Context from '../Context';
 import Pokemon from '../components/Pokemon';
+import {PokemonsProps, PokemonType} from '../types';
 
 const Container = styled.div`
   width: 100%;
@@ -14,15 +15,8 @@ const Container = styled.div`
     flex-direction: row;
   }
 `;
-type PokemonType = {
-  name: string;
-  url: string;
-};
-type Props = {
-  catched: string[];
-};
 
-function Pokemons({ catched }: Props) {
+function Pokemons({ catched }: PokemonsProps) {
   const { state } = useContext(Context);
 
   return (

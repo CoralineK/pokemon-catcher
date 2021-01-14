@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import Context from '../Context';
 import { useHistory } from 'react-router-dom';
 import { Button } from '../styles/styled-components';
-import * as API from '../API';
 
 const font = () => 'font-family: "Ubuntu", sans-serif; color: #2e2e2e;';
 
@@ -40,12 +39,6 @@ function Nickname() {
   const history = useHistory();
   const { state, action } = useContext(Context);
 
-  const pokemons = (offset: number) => {
-    API.getPokemonsName(offset).then((result) => {
-      action.setPokemons(result);
-    });
-  };
-
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
     action.setAlert('');
@@ -57,7 +50,7 @@ function Nickname() {
     if (!state.nickname) {
       action.setAlert('Nickname is required');
     } else {
-      pokemons(state.nickname.length * 10);
+      localStorage.setItem('nickname', state.nickname);
       history.push('/catching');
     }
   }
