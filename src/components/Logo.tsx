@@ -3,8 +3,11 @@ import styled from 'styled-components';
 
 const FONT_SIZE = '8vh';
 
-const text = () =>
-  `font-size: ${FONT_SIZE}; padding: 0 0.2em 0.4em; position: absolute;`;
+const Text = styled.div`
+  font-size: ${FONT_SIZE};
+  padding: 0 0.2em 0.4em;
+  position: absolute;
+`;
 
 const TextBox = styled.div`
   position: relative;
@@ -17,15 +20,13 @@ const TextBox = styled.div`
     height: calc(${FONT_SIZE} * 1.4);
   }
 `;
-const TextBlue = styled.div`
-  ${text}
+const TextBlue = styled(Text)`
   font-family: PokemonHollow;
   color: #3d7dca;
   font-weight: bold;
   z-index: 2;
 `;
-const TextYellow = styled.div`
-  ${text}
+const TextYellow = styled(Text)`
   font-family: PokemonSolid;
   color: #ffcb05;
   text-shadow: -4px 5px #003a70;

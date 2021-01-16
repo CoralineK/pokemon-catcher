@@ -7,20 +7,17 @@ export type PokemonInfo = {
   artwork: string;
   stats: Stats[];
 };
-export type InfoProps = {
-  display: string;
-  pokemonInfo: PokemonInfo;
-};
+
 
 export type PokemonType = {
   name: string;
   url: string;
 };
 export type PokemonProps = {
-  pokemonAPI: PokemonType;
-  catched?: string[];
+  pokemon: PokemonType;
+  catched?: PokemonInfo[];
 };
 
 export type PokemonsProps = {
-  catched?: string[];
+  catched?: PokemonInfo[];
 };

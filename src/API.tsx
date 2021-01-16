@@ -1,11 +1,11 @@
-export const getPokemonsName = async (offset: number) => {
+export const getPokemons = async (offset: number) => {
   const TO_URL = `https://pokeapi.co/api/v2/pokemon?limit=5&offset=${offset}`;
   const response = await fetch(TO_URL);
   const data = await response.json();
   return data.results;
 };
 
-export const getPokemonsInfo = async (pokemon: any) => {
+export const getPokemonInfo = async (pokemon: any) => {
   const TO_URL = `${pokemon.url}`;
   const response = await fetch(TO_URL);
   const data = await response.json();

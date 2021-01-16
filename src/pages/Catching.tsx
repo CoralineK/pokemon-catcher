@@ -1,67 +1,69 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Context from '../Context';
-import { Button } from '../styles/styled-components';
+import Button from '../components/Button';
 import Logo from '../components/Logo';
 import Pokemons from '../components/Pokemons';
 import * as API from '../API';
-import { PokemonType } from '../types';
+import { PokemonInfo } from '../types';
+import {
+  basicFont,
+  flexColumnCenter,
+  navyblue,
+  small,
+  medium,
+} from '../constants';
 
 const Body = styled.div`
+  ${flexColumnCenter}
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   padding-top: 4vh;
 
-  @media (min-width: 768px) {
+  @media (min-width: ${medium}) {
     min-height: 100vh;
   }
 `;
 const Welcome = styled.p`
-  font-family: 'Ubuntu';
+  ${basicFont}
+  color: ${navyblue};
   font-size: 25px;
   font-weight: 600;
-  color: #003a70;
   margin: 5vh 0;
 
-  @media (min-width: 769px) {
-    font-size: 25px;
+  @media (min-width: ${small}) {
+    font-size: 30px;
   }
-  @media (min-width: 1025px) {
+  @media (min-width: ${medium}) {
     font-size: 35px;
-  }
-  @media (min-width: 1201px) {
-    font-size: 40px;
   }
 `;
 
 function Catching() {
-  const [catched, setCatched] = useState<string[] | undefined>();
+  const [catched, setCatched] = useState<PokemonInfo[] | undefined>();
   const { state, action } = useContext(Context);
 
-  const pokemons = (offset: number) => {
-    API.getPokemonsName(offset).then((result) => {
+  const fetchPokemons = (offset: number) => {
+    API.getPokemons(offset).then((result) => {
       action.setPokemons(result);
     });
   };
 
   useEffect(() => {
-    pokemons(state.nickname.length * 10);
+    fetchPokemons(state.nickname.length * 10);
   }, []);
 
   function handleOnClick() {
     setCatched([]);
-    const pokemons = state.pokemonsInfo.filter(
+
+    const catchedPokemons = state.pokemonsInfo.filter(
       () => Math.round(Math.random()) === 1,
     );
 
-    setCatched(pokemons.map((pokemon: PokemonType) => pokemon.name));
+    setCatched(catchedPokemons);
 
     console.log({
       nickanme: state.nickname,
-      pokemons,
+      pokemons: catchedPokemons,
     });
   }
 

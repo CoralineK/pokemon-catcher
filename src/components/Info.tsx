@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { InfoProps, Stats } from '../types';
+import { PokemonInfo, Stats } from '../types';
+import { extraFont, flexColumnCenter } from '../constants';
 
 const Container = styled.div`
+  ${flexColumnCenter}
   position: absolute;
   z-index: 3;
   width: 100%;
@@ -11,19 +13,24 @@ const Container = styled.div`
   left: 0;
   background-color: rgba(0, 0, 0, 0.7);
   border-radius: 8px;
-  flex-direction: column;
-  justify-content: center;
-`;
-const Stat = styled.div`
-  font-family: 'VT323', monospace;
-  font-size: 25px;
 `;
 
-function Info({ display, pokemonInfo }: InfoProps) {
+const Stat = styled.div`
+  ${extraFont}
+`;
+
+type Props = {
+  show: boolean;
+  pokemonInfo: PokemonInfo;
+};
+
+function Info({ show, pokemonInfo }: Props) {
+  if (!show) return null;
+
   return (
-    <Container style={{ display: display }}>
+    <Container>
       {pokemonInfo.stats.map((stat: Stats, index: number) => (
-        <Stat style={{ color: 'white' }} key={index}>
+        <Stat key={index}>
           {stat.name.toUpperCase()} {stat.value}
         </Stat>
       ))}

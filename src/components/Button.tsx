@@ -1,9 +1,8 @@
 import styled from 'styled-components';
+import { basicFont } from '../constants';
 
-const font = () => 'font-family: "Ubuntu", sans-serif; color: #2e2e2e;';
-
-export const Button = styled.button`
-  ${font}
+const Button = styled.button`
+  ${basicFont}
   border: none;
   background-color: #ffcb05;
   margin: 30px 0px;
@@ -19,3 +18,5 @@ export const Button = styled.button`
     font-size: 25px;
   }
 `;
+
+export default Button;

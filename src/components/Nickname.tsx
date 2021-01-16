@@ -2,14 +2,11 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import Context from '../Context';
 import { useHistory } from 'react-router-dom';
-import { Button } from '../styles/styled-components';
-
-const font = () => 'font-family: "Ubuntu", sans-serif; color: #2e2e2e;';
+import Button from './Button';
+import { basicFont, blue, red, flexColumnCenter, medium } from '../constants';
 
 const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  ${flexColumnCenter}
 `;
 const Container = styled.div`
   text-align: center;
@@ -17,22 +14,22 @@ const Container = styled.div`
   margin: 10vh 0 5vh;
 `;
 const NicknameInput = styled.input`
-  ${font}
+  ${basicFont}
   padding: 8px;
   border: none;
-  box-shadow: 0px 2px #3d7dca;
+  box-shadow: 0px 2px ${blue};
   font-size: 20px;
   text-align: center;
-  margin: 10px;
+  margin: 10px 0;
 
-  @media (min-width: 768px) {
+  @media (min-width: ${medium}) {
     width: 400px;
   }
 `;
 const Alert = styled.p`
-  ${font}
+  ${basicFont}
   font-size: 15px;
-  color: red;
+  color: ${red};
 `;
 
 function Nickname() {

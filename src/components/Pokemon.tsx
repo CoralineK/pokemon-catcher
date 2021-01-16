@@ -4,29 +4,47 @@ import * as API from '../API';
 import { PokemonType, PokemonProps, PokemonInfo } from '../types';
 import Context from '../Context';
 import Info from './Info';
+import {
+  basicFont,
+  navyblue,
+  green,
+  red,
+  flexColumnCenter,
+  large,
+} from '../constants';
 
-const font = () => 'font-family: "Ubuntu", sans-serif; color: #2e2e2e;';
+enum CatchState {
+  DEFAULT,
+  CATCHED,
+  UNCATCHED,
+}
 
-const Container = styled.div`
+function getBoxShadow({ catchState }: { catchState: CatchState }) {
+  switch (catchState) {
+    case CatchState.CATCHED:
+      return `inset 0 0 0 2px ${green}`;
+    case CatchState.UNCATCHED:
+      return `inset 0 0 0 2px ${red}`;
+    case CatchState.DEFAULT:
+    default:
+      return `inset 0 0 0 1px ${navyblue}`;
+  }
+}
+
+const Container = styled.div<{ catchState: CatchState }>`
+  ${flexColumnCenter}
   position: relative;
-  display: block;
-  text-align: center;
   border-radius: 8px;
   padding: 2% 1%;
   margin: 10px;
+  box-shadow: ${getBoxShadow};
 `;
 const Name = styled.div`
-  ${font}
+  ${basicFont}
   font-size: 20px;
   padding-top: 5px;
 
-  @media (min-width: 769px) {
-    font-size: 15px;
-  }
-  @media (min-width: 1025px) {
-    font-size: 20px;
-  }
-  @media (min-width: 1201px) {
+  @media (min-width: ${large}) {
     font-size: 25px;
   }
 `;
@@ -36,21 +54,21 @@ const Artwork = styled.div`
   }
 `;
 
-function Pokemon({ pokemonAPI, catched }: PokemonProps) {
+function Pokemon({ pokemon, catched }: PokemonProps) {
   const { state, action } = useContext(Context);
   const [pokemonInfo, setPokemonInfo] = useState<PokemonInfo>();
-  const [border, setBorder] = useState<string>('inset 0 0 0 1px #003a70');
-  const [tooltip, setTooltip] = useState<string>('none');
+  const [catchState, setCatchState] = useState<CatchState>(CatchState.DEFAULT);
+  const [showTooltip, setShowTooltip] = useState<boolean>(false);
 
-  const pokemon = (pokemon: PokemonType) => {
-    API.getPokemonsInfo(pokemon).then((result) => {
+  const fetchPokemonInfo = (pokemon: PokemonType) => {
+    API.getPokemonInfo(pokemon).then((result) => {
       setPokemonInfo(result);
     });
   };
 
   useEffect(() => {
-    pokemon(pokemonAPI);
-  }, [pokemonAPI]);
+    fetchPokemonInfo(pokemon);
+  }, [pokemon]);
 
   useEffect(() => {
     pokemonInfo &&
@@ -61,27 +79,28 @@ function Pokemon({ pokemonAPI, catched }: PokemonProps) {
 
   useEffect(() => {
     if (pokemonInfo && catched) {
-      catched.includes(pokemonInfo.name)
-        ? setBorder('inset 0 0 0 2px #4ede31')
-        : setBorder('inset 0 0 0 2px #eb4034');
+      catched.map((e: PokemonInfo) => e.name).includes(pokemonInfo.name)
+        ? setCatchState(CatchState.CATCHED)
+        : setCatchState(CatchState.UNCATCHED);
     }
   }, [catched, pokemonInfo]);
 
   function handleOnMouseEnter() {
-    setTooltip('flex');
+    setShowTooltip(true);
   }
   function handleOnMouseLeave() {
-    setTooltip('none');
+    setShowTooltip(false);
   }
 
   if (!pokemonInfo) return null;
+
   return (
     <Container
       onMouseEnter={handleOnMouseEnter}
       onMouseLeave={handleOnMouseLeave}
-      style={{ boxShadow: border }}
+      catchState={catchState}
     >
-      <Info display={tooltip} pokemonInfo={pokemonInfo} />
+      <Info show={showTooltip} pokemonInfo={pokemonInfo} />
       <Artwork>
         <img src={pokemonInfo.artwork} alt={pokemon.name} />
       </Artwork>
