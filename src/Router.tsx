@@ -6,8 +6,8 @@ export default function Router() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/" component={Start} />
-        <Route path="/catching" component={Catching} />
+        <Route exact path="/pokemon-catcher/" component={Start} />
+        <Route path="/pokemon-catcher/catching" component={Catching} />
       </Switch>
     </BrowserRouter>
   );

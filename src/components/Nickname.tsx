@@ -49,7 +49,7 @@ function Nickname() {
       setAlert('Nickname is required');
     } else {
       localStorage.setItem('nickname', state.nickname);
-      history.push('/catching');
+      history.push('/pokemon-catcher/catching');
     }
   }
 
