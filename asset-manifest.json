@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/pokemon-catcher/static/css/main.ef129d4c.chunk.css",
-    "main.js": "/pokemon-catcher/static/js/main.3bc71397.chunk.js",
-    "main.js.map": "/pokemon-catcher/static/js/main.3bc71397.chunk.js.map",
+    "main.js": "/pokemon-catcher/static/js/main.c1940def.chunk.js",
+    "main.js.map": "/pokemon-catcher/static/js/main.c1940def.chunk.js.map",
     "runtime-main.js": "/pokemon-catcher/static/js/runtime-main.b68694f3.js",
     "runtime-main.js.map": "/pokemon-catcher/static/js/runtime-main.b68694f3.js.map",
     "static/js/2.dd511826.chunk.js": "/pokemon-catcher/static/js/2.dd511826.chunk.js",
@@ -18,6 +18,6 @@
     "static/js/runtime-main.b68694f3.js",
     "static/js/2.dd511826.chunk.js",
     "static/css/main.ef129d4c.chunk.css",
-    "static/js/main.3bc71397.chunk.js"
+    "static/js/main.c1940def.chunk.js"
   ]
 }
