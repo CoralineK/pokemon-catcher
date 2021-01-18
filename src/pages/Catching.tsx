@@ -12,6 +12,7 @@ import {
   navyblue,
   small,
   medium,
+  red,
 } from '../constants';
 
 const Body = styled.div`
@@ -36,6 +37,11 @@ const Welcome = styled.p`
   @media (min-width: ${medium}) {
     font-size: 35px;
   }
+`;
+const Message = styled.div`
+  ${basicFont}
+  color: ${red};
+  font-size: 30px;
 `;
 
 function Catching() {
@@ -83,9 +89,9 @@ function Catching() {
       <Logo />
       <Welcome>Welcome, {state.nickname}!</Welcome>
       {loading ? (
-        <div>Loading...</div>
+        <Message>Loading...</Message>
       ) : error ? (
-        <div>Sorry something went wrong</div>
+        <Message>Sorry something went wrong</Message>
       ) : (
         <>
           <Pokemons pokemons={pokemons} catched={catched} />
