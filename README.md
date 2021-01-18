@@ -33,7 +33,7 @@ A simple state management solution for this app was implemented using React Cont
 
 You can check out demo of project [here](https://coralinek.github.io/pokemon-catcher/).
 
-## OR
+### OR
 
 ### Setup
 To run this project, install it locally using yarn:
