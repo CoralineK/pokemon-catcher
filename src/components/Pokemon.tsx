@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import * as API from '../API';
-import { PokemonType, PokemonProps, PokemonInfo } from '../types';
+import { PokemonType, PokemonInfo } from '../types';
 import Context from '../Context';
 import Info from './Info';
 import {
@@ -35,7 +35,7 @@ const Container = styled.div<{ catchState: CatchState }>`
   ${flexColumnCenter}
   position: relative;
   border-radius: 8px;
-  padding: 2% 1%;
+  padding: 2vh 1vw;
   margin: 10px;
   box-shadow: ${getBoxShadow};
 `;
@@ -54,7 +54,12 @@ const Artwork = styled.div`
   }
 `;
 
-function Pokemon({ pokemon, catched }: PokemonProps) {
+type Props = {
+  pokemon: PokemonType;
+  catched?: PokemonInfo[];
+};
+
+function Pokemon({ pokemon, catched }: Props) {
   const { state, action } = useContext(Context);
   const [pokemonInfo, setPokemonInfo] = useState<PokemonInfo>();
   const [catchState, setCatchState] = useState<CatchState>(CatchState.DEFAULT);

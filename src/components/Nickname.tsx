@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import Context from '../Context';
 import { useHistory } from 'react-router-dom';
@@ -34,18 +34,19 @@ const Alert = styled.p`
 
 function Nickname() {
   const history = useHistory();
+  const [alert, setAlert] = useState('');
   const { state, action } = useContext(Context);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
-    action.setAlert('');
+    setAlert('');
     action.setNickname(e.target.value);
   }
 
   function handleSubmit(e: React.ChangeEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!state.nickname) {
-      action.setAlert('Nickname is required');
+      setAlert('Nickname is required');
     } else {
       localStorage.setItem('nickname', state.nickname);
       history.push('/catching');
@@ -60,7 +61,7 @@ function Nickname() {
           placeholder="pick your nickname"
           onChange={handleChange}
         />
-        <Alert>{state.alert}</Alert>
+        <Alert>{alert}</Alert>
       </Container>
       <Button type="submit">Continue</Button>
     </Form>

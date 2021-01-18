@@ -5,7 +5,7 @@ import Button from '../components/Button';
 import Logo from '../components/Logo';
 import Pokemons from '../components/Pokemons';
 import * as API from '../API';
-import { PokemonInfo } from '../types';
+import { PokemonInfo, PokemonType } from '../types';
 import {
   basicFont,
   flexColumnCenter,
@@ -39,13 +39,24 @@ const Welcome = styled.p`
 `;
 
 function Catching() {
+  const { state } = useContext(Context);
+
+  const [pokemons, setPokemons] = useState<PokemonType[] | undefined>();
   const [catched, setCatched] = useState<PokemonInfo[] | undefined>();
-  const { state, action } = useContext(Context);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const fetchPokemons = (offset: number) => {
-    API.getPokemons(offset).then((result) => {
-      action.setPokemons(result);
-    });
+    setLoading(true);
+    API.getPokemons(offset)
+      .then((result) => {
+        setPokemons(result);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error.message);
+        setLoading(false);
+      });
   };
 
   useEffect(() => {
@@ -71,13 +82,21 @@ function Catching() {
     <Body>
       <Logo />
       <Welcome>Welcome, {state.nickname}!</Welcome>
-      <Pokemons catched={catched} />
-      <Button
-        onClick={handleOnClick}
-        style={{ backgroundColor: '#3d7dca', color: 'white' }}
-      >
-        Catch'em!
-      </Button>
+      {loading ? (
+        <div>Loading...</div>
+      ) : error ? (
+        <div>Sorry something went wrong</div>
+      ) : (
+        <>
+          <Pokemons pokemons={pokemons} catched={catched} />
+          <Button
+            onClick={handleOnClick}
+            style={{ backgroundColor: '#3d7dca', color: 'white' }}
+          >
+            Catch'em!
+          </Button>
+        </>
+      )}
     </Body>
   );
 }

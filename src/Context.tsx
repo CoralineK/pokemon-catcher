@@ -1,12 +1,11 @@
 import React from 'react';
+import { PokemonInfo } from './types';
 
 type ContextType = {
-  state: { nickname: string; alert: string; pokemons: any; pokemonsInfo: any};
+  state: { nickname: string; pokemonsInfo: any };
   action: {
     setNickname: (nickname: string) => void;
-    setAlert: (alert: string) => void;
-    setPokemons: (pokemons: any) => void;
-    setPokemonsInfo: (pokemonsInfo: any) => void;
+    setPokemonsInfo: (pokemonsInfo: PokemonInfo[]) => void;
   };
 };
 

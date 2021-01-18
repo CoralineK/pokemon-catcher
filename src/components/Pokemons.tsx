@@ -1,8 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import Context from '../Context';
 import Pokemon from '../components/Pokemon';
-import { PokemonsProps, PokemonType } from '../types';
+import { PokemonInfo, PokemonType } from '../types';
 import { small } from '../constants';
 
 const Container = styled.div`
@@ -17,13 +16,16 @@ const Container = styled.div`
   }
 `;
 
-function Pokemons({ catched }: PokemonsProps) {
-  const { state } = useContext(Context);
+type Props = {
+  pokemons?: PokemonType[];
+  catched?: PokemonInfo[];
+};
 
+function Pokemons({ pokemons, catched }: Props) {
   return (
     <Container>
-      {state.pokemons &&
-        state.pokemons.map((pokemon: PokemonType, index: number) => (
+      {pokemons &&
+        pokemons.map((pokemon: PokemonType, index: number) => (
           <Pokemon pokemon={pokemon} catched={catched} key={index}></Pokemon>
         ))}
     </Container>
